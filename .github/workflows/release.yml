@@ -1,0 +1,56 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  vsix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run build:core
+      - run: npm run build:vscode
+      - name: Package VSIX
+        run: npm run package:vscode
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vsix
+          path: packages/vscode-extension/*.vsix
+      - name: Attach VSIX to release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: packages/vscode-extension/*.vsix
+
+  windows-installer:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run build:core
+      - name: Build Windows app
+        run: npm run build:app
+      - name: Package installer + portable
+        run: npm run package:app
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows-installer
+          path: |
+            packages/windows-app/release/*.exe
+      - name: Attach installer to release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: packages/windows-app/release/*.exe

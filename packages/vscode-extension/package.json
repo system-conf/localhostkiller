@@ -1,0 +1,192 @@
+{
+  "name": "localhostkiller-vscode",
+  "displayName": "Localhost Killer",
+  "description": "Find and kill processes listening on localhost ports — right from VS Code.",
+  "version": "0.1.0",
+  "publisher": "localhostkiller",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-org/localhostkiller.git",
+    "directory": "packages/vscode-extension"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other",
+    "Debuggers"
+  ],
+  "keywords": [
+    "localhost",
+    "port",
+    "kill port",
+    "kill localhost",
+    "EADDRINUSE",
+    "address already in use",
+    "port already in use",
+    "netstat",
+    "taskkill",
+    "dev server",
+    "free port",
+    "kill node",
+    "kill process",
+    "windows",
+    "vite",
+    "nextjs",
+    "react dev server",
+    "port killer"
+  ],
+  "qna": "marketplace",
+  "galleryBanner": {
+    "color": "#15171c",
+    "theme": "dark"
+  },
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "localhostkiller",
+          "title": "Localhost Killer",
+          "icon": "resources/activity.svg"
+        }
+      ]
+    },
+    "views": {
+      "localhostkiller": [
+        {
+          "id": "localhostkiller.view",
+          "name": "Listening Ports",
+          "icon": "resources/activity.svg",
+          "contextualTitle": "Localhost Killer"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "localhostkiller.view",
+        "contents": "Hiçbir port dinlemiyor.\n[Yenile](command:localhostkiller.refresh)"
+      }
+    ],
+    "commands": [
+      {
+        "command": "localhostkiller.refresh",
+        "title": "Localhost Killer: Refresh",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "localhostkiller.killOne",
+        "title": "Kill Process",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "localhostkiller.killAll",
+        "title": "Localhost Killer: Kill All",
+        "icon": "$(flame)"
+      },
+      {
+        "command": "localhostkiller.copyPid",
+        "title": "Copy PID"
+      },
+      {
+        "command": "localhostkiller.copyPort",
+        "title": "Copy Port"
+      },
+      {
+        "command": "localhostkiller.copyCommand",
+        "title": "Copy Command Line"
+      },
+      {
+        "command": "localhostkiller.openUrl",
+        "title": "Open in Browser"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "localhostkiller.refresh",
+          "when": "view == localhostkiller.view",
+          "group": "navigation@1"
+        },
+        {
+          "command": "localhostkiller.killAll",
+          "when": "view == localhostkiller.view",
+          "group": "navigation@2"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "localhostkiller.killOne",
+          "when": "view == localhostkiller.view && viewItem =~ /^lhk-process/",
+          "group": "inline"
+        },
+        {
+          "command": "localhostkiller.openUrl",
+          "when": "view == localhostkiller.view && viewItem =~ /^lhk-process/",
+          "group": "1_actions@1"
+        },
+        {
+          "command": "localhostkiller.copyPort",
+          "when": "view == localhostkiller.view && viewItem =~ /^lhk-process/",
+          "group": "9_copy@1"
+        },
+        {
+          "command": "localhostkiller.copyPid",
+          "when": "view == localhostkiller.view && viewItem =~ /^lhk-process/",
+          "group": "9_copy@2"
+        },
+        {
+          "command": "localhostkiller.copyCommand",
+          "when": "view == localhostkiller.view && viewItem =~ /^lhk-process/",
+          "group": "9_copy@3"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Localhost Killer",
+      "properties": {
+        "localhostkiller.autoRefreshSeconds": {
+          "type": "number",
+          "default": 0,
+          "minimum": 0,
+          "maximum": 3600,
+          "description": "0 ise oto-yenileme kapalı. Saniye cinsinden yenileme aralığı."
+        },
+        "localhostkiller.confirmKillAll": {
+          "type": "boolean",
+          "default": true,
+          "description": "Kill All çalıştırılmadan önce onay modal'ı göster."
+        },
+        "localhostkiller.includeProtected": {
+          "type": "boolean",
+          "default": false,
+          "description": "Kill All sırasında sistem süreçlerini (svchost, lsass, ...) dahil et. RİSKLİ."
+        },
+        "localhostkiller.statusBar": {
+          "type": "boolean",
+          "default": true,
+          "description": "Durum çubuğunda dinlenen port sayısını göster."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "node esbuild.js",
+    "watch": "node esbuild.js --watch",
+    "package": "vsce package --no-dependencies"
+  },
+  "dependencies": {
+    "@localhostkiller/core": "*"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.12",
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^2.27.0",
+    "esbuild": "^0.21.5",
+    "typescript": "^5.5.4"
+  }
+}

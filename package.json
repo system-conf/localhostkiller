@@ -1,0 +1,56 @@
+{
+  "name": "localhostkiller",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Find and kill any process listening on a localhost port (127.0.0.1, 0.0.0.0, ::1). Fixes EADDRINUSE. Ships as a VS Code extension and a Windows desktop app. Open-source, MIT.",
+  "keywords": [
+    "localhost",
+    "port",
+    "port-killer",
+    "kill-port",
+    "EADDRINUSE",
+    "address-already-in-use",
+    "taskkill",
+    "netstat",
+    "vscode-extension",
+    "electron",
+    "developer-tools",
+    "dev-server",
+    "windows",
+    "free-port",
+    "kill-process",
+    "node-port",
+    "vite",
+    "nextjs",
+    "react-dev-server"
+  ],
+  "license": "MIT",
+  "author": "localhostkiller contributors",
+  "homepage": "https://github.com/your-username/localhostkiller#readme",
+  "bugs": {
+    "url": "https://github.com/your-username/localhostkiller/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/localhostkiller.git"
+  },
+  "workspaces": [
+    "packages/core",
+    "packages/vscode-extension",
+    "packages/windows-app"
+  ],
+  "scripts": {
+    "build": "npm run build -w @localhostkiller/core && npm run build -w localhostkiller-vscode && npm run build -w localhostkiller-app",
+    "build:core": "npm run build -w @localhostkiller/core",
+    "build:vscode": "npm run build -w localhostkiller-vscode",
+    "build:app": "npm run build -w localhostkiller-app",
+    "dev:vscode": "npm run watch -w localhostkiller-vscode",
+    "dev:app": "npm run dev -w localhostkiller-app",
+    "package:vscode": "npm run package -w localhostkiller-vscode",
+    "package:app": "npm run package -w localhostkiller-app",
+    "clean": "node -e \"require('fs').rmSync('packages/core/dist',{recursive:true,force:true});require('fs').rmSync('packages/vscode-extension/out',{recursive:true,force:true});require('fs').rmSync('packages/windows-app/dist-main',{recursive:true,force:true});require('fs').rmSync('packages/windows-app/dist-renderer',{recursive:true,force:true});require('fs').rmSync('packages/windows-app/release',{recursive:true,force:true});\""
+  },
+  "devDependencies": {
+    "typescript": "^5.5.4"
+  }
+}

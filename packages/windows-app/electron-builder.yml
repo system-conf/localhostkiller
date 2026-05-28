@@ -1,0 +1,36 @@
+appId: com.localhostkiller.app
+productName: Localhost Killer
+copyright: Copyright (c) 2026 localhostkiller contributors
+
+directories:
+  output: release
+  buildResources: resources
+
+files:
+  - dist-main/**/*
+  - dist-renderer/**/*
+  - package.json
+  - "!node_modules/@localhostkiller/core/src"
+  - "!node_modules/@localhostkiller/core/tsconfig.json"
+
+asar: true
+asarUnpack: []
+
+win:
+  target:
+    - target: nsis
+      arch: [x64]
+    - target: portable
+      arch: [x64]
+  artifactName: ${productName}-${version}-${arch}.${ext}
+
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: Localhost Killer
+
+portable:
+  artifactName: ${productName}-${version}-portable.${ext}

@@ -1,0 +1,14 @@
+node_modules/
+dist/
+dist-main/
+dist-renderer/
+out/
+release/
+*.vsix
+*.log
+.DS_Store
+.vscode-test/
+.env
+.env.*
+!.env.example
+*.tsbuildinfo

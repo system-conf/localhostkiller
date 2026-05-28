@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <rect width="128" height="128" rx="20" fill="#1e1e1e"/>
+  <path d="M44 100 Q22 84 30 60 Q34 48 44 42 Q40 56 50 60 Q44 44 56 30 Q56 50 70 56 Q80 62 84 76 Q86 100 64 108 Q54 108 44 100 Z"
+        fill="#ff6b35" stroke="#ffd23f" stroke-width="2"/>
+  <text x="64" y="120" text-anchor="middle" font-family="monospace" font-size="14" fill="#ffd23f" font-weight="bold">:KILL</text>
+</svg>

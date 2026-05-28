@@ -1,0 +1,10 @@
+.vscode/**
+.vscode-test/**
+src/**
+**/*.ts
+**/*.map
+**/tsconfig.json
+**/esbuild.js
+node_modules/**
+!node_modules/@localhostkiller/core/dist/**
+.gitignore

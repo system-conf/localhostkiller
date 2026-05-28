@@ -1,0 +1,19 @@
+{
+  "name": "@localhostkiller/core",
+  "version": "0.1.0",
+  "description": "Shared scanner + killer for localhost listening processes.",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "watch": "tsc -p tsconfig.json --watch"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.12",
+    "typescript": "^5.5.4"
+  }
+}
