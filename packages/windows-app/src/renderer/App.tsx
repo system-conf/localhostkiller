@@ -4,6 +4,7 @@ import { ProcessTable } from './components/ProcessTable';
 import { KillAllBar } from './components/KillAllBar';
 import { EmptyState } from './components/EmptyState';
 import { ConfirmModal } from './components/ConfirmModal';
+import { Flame, EyeOff } from './components/Icons';
 import type { LocalhostProcess } from './types';
 
 const AUTO_REFRESH_MS = 5000;
@@ -67,6 +68,7 @@ export function App(): JSX.Element {
     () => items.filter((p) => includeProtected || !p.protected).length,
     [items, includeProtected],
   );
+  const protectedCount = useMemo(() => items.filter((p) => p.protected).length, [items]);
 
   const markBusy = (pid: number, busy: boolean) => {
     setBusyPids((prev) => {
@@ -131,16 +133,29 @@ export function App(): JSX.Element {
     <div className="app">
       <header className="header">
         <div className="title">
-          <span className="flame">🔥</span>
-          <span>Localhost Killer</span>
+          <Flame size={18} className="brand-flame" />
+          <span className="title-text">Localhost Killer</span>
+          <span className="title-sep" />
+          <span className="title-meta">
+            <strong>{killableCount}</strong>
+            <span className="dim"> killable</span>
+            {protectedCount > 0 && (
+              <>
+                <span className="dim"> · </span>
+                <strong>{protectedCount}</strong>
+                <span className="dim"> protected</span>
+              </>
+            )}
+          </span>
         </div>
         <div className="header-actions">
           <button
-            className="ghost"
+            className="ghost icon-btn"
             onClick={() => window.lhk.hideToTray()}
-            title="Hide to tray"
+            title="Hide to system tray"
           >
-            Hide
+            <EyeOff size={14} />
+            <span>Hide</span>
           </button>
         </div>
       </header>
@@ -184,9 +199,9 @@ export function App(): JSX.Element {
       {pendingKillAll && (
         <ConfirmModal
           title="Kill All Localhost Processes"
-          body={`${killableCount} süreç öldürülecek${
-            includeProtected ? ' (korumalı dahil)' : ''
-          }. Devam edilsin mi?`}
+          body={`${killableCount} process(es) will be terminated${
+            includeProtected ? ' (including protected)' : ''
+          }. Continue?`}
           confirmLabel="Kill All"
           danger
           onCancel={() => setPendingKillAll(false)}
@@ -196,8 +211,8 @@ export function App(): JSX.Element {
 
       {pendingProtectedPid !== null && (
         <ConfirmModal
-          title="Sistem süreci"
-          body={`PID ${pendingProtectedPid} korumalı bir sistem süreci. Yine de öldürmek istiyor musun?`}
+          title="System process"
+          body={`PID ${pendingProtectedPid} appears to be a protected system process. Terminate anyway?`}
           confirmLabel="Kill anyway"
           danger
           onCancel={() => setPendingProtectedPid(null)}

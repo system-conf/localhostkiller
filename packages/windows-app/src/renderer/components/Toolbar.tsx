@@ -1,4 +1,5 @@
 import React from 'react';
+import { Refresh, Search } from './Icons';
 
 interface Props {
   search: string;
@@ -14,20 +15,24 @@ interface Props {
 export function Toolbar(props: Props): JSX.Element {
   return (
     <div className="toolbar">
-      <input
-        className="search"
-        type="search"
-        placeholder="port, pid, name veya cmdline ara..."
-        value={props.search}
-        onChange={(e) => props.onSearch(e.target.value)}
-      />
+      <div className="search-wrap">
+        <Search size={14} className="search-icon" />
+        <input
+          className="search"
+          type="search"
+          placeholder="Search by port, PID, name or command line..."
+          value={props.search}
+          onChange={(e) => props.onSearch(e.target.value)}
+        />
+      </div>
       <button
-        className="ghost"
+        className="ghost icon-btn"
         onClick={props.onRefresh}
         disabled={props.loading}
-        title="Refresh (F5)"
+        title="Refresh"
       >
-        {props.loading ? '...' : '↻'} Refresh
+        <Refresh size={14} className={props.loading ? 'spin' : ''} />
+        <span>Refresh</span>
       </button>
       <label className="checkbox">
         <input
@@ -37,7 +42,7 @@ export function Toolbar(props: Props): JSX.Element {
         />
         Auto-refresh
       </label>
-      <label className="checkbox" title="Sistem süreçlerini de Kill All'a dahil et (riskli)">
+      <label className="checkbox" title="Include system processes in Kill All (risky)">
         <input
           type="checkbox"
           checked={props.includeProtected}

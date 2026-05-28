@@ -44,6 +44,10 @@ nsis:
   createDesktopShortcut: true
   createStartMenuShortcut: true
   shortcutName: Localhost Killer
+  uninstallDisplayName: Localhost Killer
+  menuCategory: false
+  runAfterFinish: true
+  deleteAppDataOnUninstall: false
 
 portable:
   artifactName: ${productName}-${version}-portable.${ext}
