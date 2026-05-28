@@ -1,6 +1,8 @@
 # Localhost Killer — Kill Any Process Using a localhost Port on Windows (VS Code Extension + Desktop App)
 
-> **Stop fighting with `EADDRINUSE: address already in use`.** Find and kill any process listening on `localhost:3000`, `:5173`, `:8080` — or any other port — with one click. Open-source, MIT-licensed, works without admin rights.
+**Read this in:** [English](README.md) · [Türkçe](README.tr.md) · [Deutsch](README.de.md)
+
+> Stop fighting with `EADDRINUSE: address already in use`. Find and kill any process listening on `localhost:3000`, `:5173`, `:8080` — or any other port — with one click. Open-source, MIT-licensed, works without admin rights.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Platform: Windows](https://img.shields.io/badge/Platform-Windows%2010%20%7C%2011-blue)](#)
@@ -12,27 +14,14 @@
 
 Ships in two flavors from the **same codebase**:
 
-1. 🧩 **VS Code Extension** — a sidebar view + status bar indicator inside your editor.
-2. 🪟 **Windows Desktop App** (Electron) — a standalone window with a system-tray icon for when you're not in VS Code.
-
----
-
-## Bu Repo Ne İşe Yarar? (Türkçe)
-
-Geliştirici makinende sürekli arkaplanda kalan **Node.js**, **Python**, **.NET**, **Java**, **Docker**, **Vite**, **Next.js**, **Webpack Dev Server**, **React Native Metro**, **Spring Boot** gibi süreçler **localhost portlarını işgal ediyor mu**? `npm run dev` çalıştırınca `EADDRINUSE: address already in use :::3000` mu alıyorsun? Her seferinde `netstat -ano | findstr :3000` → `taskkill /F /PID 12345` yapmaktan bıktın mı?
-
-**Localhost Killer** tam olarak bu sorunu çözer:
-- Dinlenen tüm localhost portlarını **listeler** (port, PID, süreç adı, komut satırı)
-- **Tek tıkla öldür** veya **Kill All** ile hepsini birden temizle
-- Sistem süreçlerini (`svchost`, `lsass`, `services`) **otomatik korur** — kazara öldürmek mümkün değil
-- Hem **VS Code eklentisi**, hem **Windows masaüstü uygulaması** olarak çalışır
-- **Açık kaynak**, MIT lisanslı, yönetici (admin) izni gerektirmez
+1. **VS Code Extension** — a sidebar view and status bar indicator inside your editor.
+2. **Windows Desktop App** (Electron) — a standalone window with a system-tray icon for when you are not in VS Code.
 
 ---
 
 ## Common Errors This Tool Fixes
 
-If you've ever seen any of these errors, this tool was built for you:
+If you have ever seen any of these errors, this tool was built for you:
 
 ```text
 Error: listen EADDRINUSE: address already in use :::3000
@@ -70,16 +59,16 @@ Common offenders Localhost Killer catches:
 
 ## Features
 
-- 🔍 **Scans every TCP listener** on `127.0.0.1`, `0.0.0.0`, `::1`, `::` via `netstat -ano` + `Get-CimInstance Win32_Process` — no external dependencies
-- ⚡ **One-click kill** per port, or **Kill All** to nuke every dev server at once
-- 🛡️ **System-process protection**: PID 0/4, `svchost.exe`, `lsass.exe`, `services.exe`, `wininit.exe`, `csrss.exe`, `smss.exe`, `winlogon.exe`, `spoolsv.exe`, `dwm.exe` are flagged and require explicit confirmation
-- 🌳 **Process-tree kill** (`taskkill /F /T`) — properly cleans up child workers, not just the parent
-- 🪟 **System tray support** (desktop app) — minimize to tray, right-click → Kill All
-- 📊 **VS Code status bar** indicator: `🔥 3 localhost` — click to open the view
-- ⏱️ **Auto-refresh** (5 s, toggleable in both UIs)
-- 🌐 **Click port → opens `http://localhost:PORT`** in your default browser
-- 🔎 Search by port, PID, process name, or command line
-- 🌗 **Dark/light theme** auto-detect
+- **Scans every TCP listener** on `127.0.0.1`, `0.0.0.0`, `::1`, `::` via `netstat -ano` and `Get-CimInstance Win32_Process` — no external dependencies.
+- **One-click kill** per port, or **Kill All** to terminate every dev server at once.
+- **System-process protection**: PID 0/4 and `svchost.exe`, `lsass.exe`, `services.exe`, `wininit.exe`, `csrss.exe`, `smss.exe`, `winlogon.exe`, `spoolsv.exe`, `dwm.exe` are flagged as protected and require explicit confirmation.
+- **Process-tree kill** (`taskkill /F /T`) properly cleans up child workers, not just the parent.
+- **System tray support** in the desktop app: minimize to tray, right-click for Kill All.
+- **VS Code status bar** indicator shows the current count of listening localhost ports. Click it to open the view.
+- **Auto-refresh** every 5 seconds, toggleable in both UIs.
+- Click a port to open `http://localhost:PORT` in your default browser.
+- Search by port, PID, process name, or command line.
+- **Dark and light themes** auto-detected from the system.
 
 ---
 
@@ -92,7 +81,7 @@ git clone https://github.com/system-conf/localhostkiller.git
 cd localhostkiller
 npm install
 npm run build:core
-npm run package:vscode      # → packages/vscode-extension/*.vsix
+npm run package:vscode      # produces packages/vscode-extension/*.vsix
 code --install-extension packages/vscode-extension/localhostkiller-vscode-*.vsix
 ```
 
@@ -105,28 +94,29 @@ git clone https://github.com/system-conf/localhostkiller.git
 cd localhostkiller
 npm install
 npm run build:core
-npm run package:app         # → packages/windows-app/release/*.exe
+npm run package:app         # produces packages/windows-app/release/*.exe
 ```
 
 Two installers are produced:
-- `Localhost Killer-X.Y.Z-x64.exe` — NSIS installer (creates Start Menu + desktop shortcuts)
-- `Localhost Killer-X.Y.Z-portable.exe` — single portable EXE, no install required
 
-> The first release is **unsigned**. Windows SmartScreen will show "Windows protected your PC" — click "More info" → "Run anyway". Code-signing will land once a certificate is available.
+- `Localhost Killer-X.Y.Z-x64.exe` — NSIS installer with Start Menu and desktop shortcuts.
+- `Localhost Killer-X.Y.Z-portable.exe` — a single portable EXE, no install required.
+
+> The first release is **unsigned**. Windows SmartScreen will show "Windows protected your PC" — click "More info" then "Run anyway". Code-signing will land once a certificate is available.
 
 ---
 
 ## How It Works
 
-### Detection (Windows)
+### Detection on Windows
 
 ```
-1. Run `netstat -ano -p TCP`  → parse LISTENING rows
-2. Filter local address to: 127.0.0.1 | 0.0.0.0 | ::1 | ::
+1. Run `netstat -ano -p TCP` and parse LISTENING rows.
+2. Filter local address to 127.0.0.1, 0.0.0.0, ::1, or ::.
 3. Batch-fetch PID metadata via PowerShell:
      Get-CimInstance Win32_Process -Filter "ProcessId=X or ProcessId=Y ..."
-4. Map PID → { Name, CommandLine, ExecutablePath }
-5. Tag known system PIDs as `protected`
+4. Map PID to { Name, CommandLine, ExecutablePath }.
+5. Tag known system PIDs as protected.
 ```
 
 ### Kill
@@ -134,7 +124,7 @@ Two installers are produced:
 ```
 Windows:  taskkill /F /T /PID <pid>     # tree-kill (parent + children)
 Linux:    process.kill(pid, 'SIGKILL')
-macOS:    process.kill(pid, 'SIGKILL')  # lsof for detection
+macOS:    process.kill(pid, 'SIGKILL')  # uses lsof for detection
 ```
 
 All logic lives in [`packages/core`](packages/core/src) and is shared 1:1 between the VS Code extension and the desktop app.
@@ -161,15 +151,15 @@ The `@localhostkiller/core` package exposes three async functions:
 import { scanLocalhost, killPid, killAll } from '@localhostkiller/core';
 
 const processes = await scanLocalhost();
-// → [{ pid: 12345, port: 3000, name: 'node.exe', cmdline: 'node server.js', protected: false, ... }]
+// [{ pid: 12345, port: 3000, name: 'node.exe', cmdline: 'node server.js', protected: false, ... }]
 
 await killPid(12345);
 
 const result = await killAll({ includeProtected: false });
-// → { killed: [12345, 67890], failed: [] }
+// { killed: [12345, 67890], failed: [] }
 ```
 
-Use it directly from any Node.js script or Electron app — it's a regular npm package.
+Use it directly from any Node.js script or Electron app — it is a regular npm package.
 
 ---
 
@@ -177,12 +167,12 @@ Use it directly from any Node.js script or Electron app — it's a regular npm p
 
 | Tool | Platform | UI | Tree-kill | System-process guard | Open Source |
 |------|----------|-----|-----------|---------------------|-------------|
-| **Localhost Killer** | Win/macOS/Linux | VS Code + Desktop | ✅ | ✅ | ✅ MIT |
-| `netstat -ano` + `taskkill` | Windows | CLI only | manual | ❌ | n/a |
-| `kill-port` (npm) | cross-platform | CLI only | partial | ❌ | ✅ |
-| `npx fkill` | cross-platform | CLI / interactive | ❌ | ❌ | ✅ |
-| TCPView (Sysinternals) | Windows | GUI | ❌ | ❌ | ❌ closed |
-| Resource Monitor | Windows | GUI | ❌ | ❌ | ❌ built-in |
+| **Localhost Killer** | Win/macOS/Linux | VS Code + Desktop | Yes | Yes | Yes (MIT) |
+| `netstat -ano` + `taskkill` | Windows | CLI only | manual | No | n/a |
+| `kill-port` (npm) | cross-platform | CLI only | partial | No | Yes |
+| `npx fkill` | cross-platform | CLI / interactive | No | No | Yes |
+| TCPView (Sysinternals) | Windows | GUI | No | No | No (closed) |
+| Resource Monitor | Windows | GUI | No | No | No (built-in) |
 
 ---
 
@@ -192,11 +182,11 @@ Use it directly from any Node.js script or Electron app — it's a regular npm p
 npm install
 npm run build:core              # compile shared core first
 
-npm run dev:vscode              # esbuild --watch + F5 to launch
+npm run dev:vscode              # esbuild --watch, press F5 to launch
 npm run dev:app                 # Vite + tsc --watch + Electron, hot reload UI
 ```
 
-Project layout, scripts, and how the IPC contract between Electron main/renderer works are documented in each package's README:
+Project layout, scripts, and the IPC contract between the Electron main and renderer are documented in each package's README:
 
 - [packages/core/](packages/core)
 - [packages/vscode-extension/README.md](packages/vscode-extension/README.md)
@@ -206,26 +196,26 @@ Project layout, scripts, and how the IPC contract between Electron main/renderer
 
 ## Contributing
 
-PRs welcome — see [CONTRIBUTING.md](CONTRIBUTING.md). The shared scanner/killer logic is intentionally tiny (~250 lines) so it's easy to read end-to-end. Most contributions are likely to land in:
+Pull requests are welcome — see [CONTRIBUTING.md](CONTRIBUTING.md). The shared scanner and killer logic is intentionally tiny (~250 lines) so it is easy to read end-to-end. Most contributions are likely to land in:
 
-- Better process-metadata extraction (CWD, parent PID, port → URL guess)
-- macOS / Linux UIs (the core already supports them via `lsof` / `ss`)
-- A CLI wrapper around `@localhostkiller/core` for shell scripts
-- Better filtering / grouping in the UIs
+- Better process-metadata extraction (CWD, parent PID, port to URL guess).
+- macOS and Linux UIs (the core already supports them via `lsof` and `ss`).
+- A CLI wrapper around `@localhostkiller/core` for shell scripts.
+- Better filtering and grouping in the UIs.
 
 ---
 
 ## FAQ
 
-**Does this need admin rights?** No. `taskkill /F` works on any process you own. System-level services (which require admin) are filtered as `protected` by default.
+**Does this need admin rights?** No. `taskkill /F` works on any process you own. System-level services (which require admin) are filtered as protected by default.
 
-**Will it kill VS Code or my browser?** No. The default behavior only lists processes that are *listening* on a localhost port. VS Code's renderer and your browser aren't listening — they're connecting outward.
+**Will it kill VS Code or my browser?** No. The default behavior only lists processes that are *listening* on a localhost port. VS Code's renderer and your browser are not listening — they are connecting outward.
 
-**Can I use just the scanner library?** Yes. `npm i @localhostkiller/core` and call `scanLocalhost()`. Returns a `LocalhostProcess[]`.
+**Can I use just the scanner library?** Yes. `npm i @localhostkiller/core` and call `scanLocalhost()`. It returns a `LocalhostProcess[]`.
 
 **Why TCP only? What about UDP?** Dev servers are virtually always TCP. UDP support is a possible future addition — open an issue if you need it.
 
-**macOS / Linux support?** The core works (`lsof` / `ss`), but the **VS Code extension also works there** with zero changes since it's pure Node. The standalone desktop app is currently Windows-only by build target — flip `electron-builder.yml` to add `mac` / `linux` targets if you want it.
+**macOS or Linux support?** The core works (`lsof` and `ss`), and the **VS Code extension also works there** with zero changes since it is pure Node. The standalone desktop app is currently Windows-only by build target — flip `electron-builder.yml` to add `mac` and `linux` targets if you want it.
 
 ---
 
@@ -239,4 +229,4 @@ PRs welcome — see [CONTRIBUTING.md](CONTRIBUTING.md). The shared scanner/kille
 
 [MIT](./LICENSE) © 2026 localhostkiller contributors
 
-If this saved you time, ⭐ the repo — it helps others find it.
+If this saved you time, star the repo — it helps others find it.
