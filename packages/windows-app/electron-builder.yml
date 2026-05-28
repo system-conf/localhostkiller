@@ -1,6 +1,19 @@
 appId: com.localhostkiller.app
 productName: Localhost Killer
 copyright: Copyright (c) 2026 localhostkiller contributors
+electronVersion: 31.7.7
+
+# Main + preload are bundled by esbuild; renderer is bundled by Vite.
+# So there is nothing to install at packaging time — neutralise the
+# production dependency list so electron-builder does not run
+# `npm install --production` (which prunes hoisted workspace deps and
+# breaks 7zip-bin).
+extraMetadata:
+  dependencies: {}
+  devDependencies: {}
+
+npmRebuild: false
+buildDependenciesFromSource: false
 
 directories:
   output: release
@@ -11,8 +24,6 @@ files:
   - dist-renderer/**/*
   - resources/**/*
   - package.json
-  - "!node_modules/@localhostkiller/core/src"
-  - "!node_modules/@localhostkiller/core/tsconfig.json"
 
 asar: true
 asarUnpack: []
