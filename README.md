@@ -88,7 +88,7 @@ Common offenders Localhost Killer catches:
 ### Install the VS Code Extension
 
 ```bash
-git clone https://github.com/your-username/localhostkiller.git
+git clone https://github.com/system-conf/localhostkiller.git
 cd localhostkiller
 npm install
 npm run build:core
@@ -101,7 +101,7 @@ Or load it as a development extension: open `packages/vscode-extension/` in VS C
 ### Install the Windows Desktop App
 
 ```bash
-git clone https://github.com/your-username/localhostkiller.git
+git clone https://github.com/system-conf/localhostkiller.git
 cd localhostkiller
 npm install
 npm run build:core

@@ -54,7 +54,7 @@ Aç:
 ## 4. GitHub Pages (opsiyonel ama SEO için güçlü)
 
 Settings → Pages → Source: `Deploy from branch` → `main` → `/docs` folder.
-Sonra `docs/index.html` yazarsan `your-username.github.io/localhostkiller` ile landing page olur. Google ve AI bot'ları için çok değerli.
+Sonra `docs/index.html` yazarsan `system-conf.github.io/localhostkiller` ile landing page olur. Google ve AI bot'ları için çok değerli.
 
 ## 5. İlk Release
 
@@ -83,12 +83,12 @@ VS Code Marketplace:
 
 ## 7. Şu placeholder'ları değiştir
 
-Tüm dosyalarda `your-username` ve `your-org` geçen yerleri kendi GitHub kullanıcı adınla değiştir:
+Tüm dosyalarda `system-conf` ve `your-org` geçen yerleri kendi GitHub kullanıcı adınla değiştir:
 
 ```powershell
 # PowerShell
 Get-ChildItem -Recurse -File -Include *.md,*.json,*.yml | ForEach-Object {
-  (Get-Content $_ -Raw) -replace 'your-username','GERCEK-KULLANICI-ADIN' | Set-Content $_
+  (Get-Content $_ -Raw) -replace 'system-conf','GERCEK-KULLANICI-ADIN' | Set-Content $_
 }
 ```
 

@@ -5,7 +5,7 @@ Thanks for considering a contribution! This project is intentionally small — t
 ## Getting Started
 
 ```bash
-git clone https://github.com/your-username/localhostkiller.git
+git clone https://github.com/system-conf/localhostkiller.git
 cd localhostkiller
 npm install
 npm run build:core

@@ -26,13 +26,13 @@
   ],
   "license": "MIT",
   "author": "localhostkiller contributors",
-  "homepage": "https://github.com/your-username/localhostkiller#readme",
+  "homepage": "https://github.com/system-conf/localhostkiller#readme",
   "bugs": {
-    "url": "https://github.com/your-username/localhostkiller/issues"
+    "url": "https://github.com/system-conf/localhostkiller/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-username/localhostkiller.git"
+    "url": "https://github.com/system-conf/localhostkiller.git"
   },
   "workspaces": [
     "packages/core",
