@@ -1,6 +1,7 @@
 import React from 'react';
 import type { LocalhostProcess } from '../types';
 import { Dot, ExternalLink, Shield } from './Icons';
+import { useI18n } from '../i18n/I18nContext';
 
 interface Props {
   items: LocalhostProcess[];
@@ -10,16 +11,17 @@ interface Props {
 }
 
 export function ProcessTable({ items, busyPids, onKill, onOpenBrowser }: Props): JSX.Element {
+  const { t } = useI18n();
   return (
     <div className="table-wrap">
       <table className="ptable">
         <thead>
           <tr>
-            <th className="col-port">Port</th>
-            <th className="col-pid">PID</th>
-            <th className="col-name">Process</th>
-            <th className="col-addr">Address</th>
-            <th className="col-cmd">Command</th>
+            <th className="col-port">{t.table.port}</th>
+            <th className="col-pid">{t.table.pid}</th>
+            <th className="col-name">{t.table.process}</th>
+            <th className="col-addr">{t.table.address}</th>
+            <th className="col-cmd">{t.table.command}</th>
             <th className="col-actions" />
           </tr>
         </thead>
@@ -38,7 +40,7 @@ export function ProcessTable({ items, busyPids, onKill, onOpenBrowser }: Props):
                         e.preventDefault();
                         onOpenBrowser(p);
                       }}
-                      title={`Open http://localhost:${p.port}`}
+                      title={`${t.table.portTooltipPrefix} http://localhost:${p.port}`}
                     >
                       :{p.port}
                     </a>
@@ -50,9 +52,9 @@ export function ProcessTable({ items, busyPids, onKill, onOpenBrowser }: Props):
                   <div className="name-cell">
                     <span>{p.name}</span>
                     {p.protected && (
-                      <span className="badge badge-protected" title="System process">
+                      <span className="badge badge-protected" title={t.table.protectedTooltip}>
                         <Shield size={10} />
-                        protected
+                        {t.table.protectedBadge}
                       </span>
                     )}
                   </div>
@@ -66,7 +68,7 @@ export function ProcessTable({ items, busyPids, onKill, onOpenBrowser }: Props):
                     className="kill"
                     disabled={busy}
                     onClick={() => onKill(p)}
-                    title="Terminate this process"
+                    title={t.table.killTooltip}
                   >
                     {busy ? '...' : 'Kill'}
                   </button>
@@ -77,7 +79,7 @@ export function ProcessTable({ items, busyPids, onKill, onOpenBrowser }: Props):
           {items.length === 0 && (
             <tr>
               <td colSpan={6} className="empty-row">
-                No processes match the current search.
+                {t.table.noMatch}
               </td>
             </tr>
           )}

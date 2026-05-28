@@ -125,8 +125,60 @@ body,
 
 .header-actions {
   display: flex;
+  align-items: center;
   gap: 6px;
   -webkit-app-region: no-drag;
+}
+
+.header-divider {
+  width: 1px;
+  height: 18px;
+  background: var(--border-strong);
+  margin: 0 4px;
+}
+
+.lang-switch {
+  display: inline-flex;
+  background: var(--bg-elev-2);
+  border-radius: 999px;
+  padding: 2px;
+  border: 1px solid var(--border);
+}
+
+.lang-pill {
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  padding: 3px 9px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.12s ease, color 0.12s ease;
+}
+
+.lang-pill:hover {
+  color: var(--text);
+}
+
+.lang-pill.active {
+  background: var(--accent);
+  color: white;
+}
+
+.lang-pill.active:hover {
+  background: var(--accent-hover);
+  color: white;
+}
+
+button.icon-only {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  width: 28px;
+  height: 28px;
 }
 
 /* ============ Buttons ============ */

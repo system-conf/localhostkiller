@@ -1,5 +1,6 @@
 import React from 'react';
 import { Refresh, Search } from './Icons';
+import { useI18n } from '../i18n/I18nContext';
 
 interface Props {
   search: string;
@@ -13,6 +14,7 @@ interface Props {
 }
 
 export function Toolbar(props: Props): JSX.Element {
+  const { t } = useI18n();
   return (
     <div className="toolbar">
       <div className="search-wrap">
@@ -20,7 +22,7 @@ export function Toolbar(props: Props): JSX.Element {
         <input
           className="search"
           type="search"
-          placeholder="Search by port, PID, name or command line..."
+          placeholder={t.toolbar.searchPlaceholder}
           value={props.search}
           onChange={(e) => props.onSearch(e.target.value)}
         />
@@ -29,10 +31,10 @@ export function Toolbar(props: Props): JSX.Element {
         className="ghost icon-btn"
         onClick={props.onRefresh}
         disabled={props.loading}
-        title="Refresh"
+        title={t.toolbar.refreshTooltip}
       >
         <Refresh size={14} className={props.loading ? 'spin' : ''} />
-        <span>Refresh</span>
+        <span>{t.toolbar.refresh}</span>
       </button>
       <label className="checkbox">
         <input
@@ -40,15 +42,15 @@ export function Toolbar(props: Props): JSX.Element {
           checked={props.autoRefresh}
           onChange={(e) => props.onToggleAutoRefresh(e.target.checked)}
         />
-        Auto-refresh
+        {t.toolbar.autoRefresh}
       </label>
-      <label className="checkbox" title="Include system processes in Kill All (risky)">
+      <label className="checkbox" title={t.toolbar.includeProtectedTooltip}>
         <input
           type="checkbox"
           checked={props.includeProtected}
           onChange={(e) => props.onToggleIncludeProtected(e.target.checked)}
         />
-        Include protected
+        {t.toolbar.includeProtected}
       </label>
     </div>
   );

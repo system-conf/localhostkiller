@@ -1,5 +1,6 @@
 import React from 'react';
 import { Power } from './Icons';
+import { useI18n } from '../i18n/I18nContext';
 
 interface Props {
   count: number;
@@ -8,11 +9,12 @@ interface Props {
 }
 
 export function KillAllBar({ count, disabled, onClick }: Props): JSX.Element {
+  const { t } = useI18n();
   return (
     <div className="killbar">
       <button className="kill-all" disabled={disabled} onClick={onClick}>
         <Power size={16} />
-        <span>Kill All</span>
+        <span>{t.killBar.killAll}</span>
         {count > 0 && <span className="count">{count}</span>}
       </button>
     </div>

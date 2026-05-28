@@ -4,6 +4,7 @@ interface Props {
   title: string;
   body: string;
   confirmLabel: string;
+  cancelLabel?: string;
   danger?: boolean;
   onConfirm: () => void;
   onCancel: () => void;
@@ -13,6 +14,7 @@ export function ConfirmModal({
   title,
   body,
   confirmLabel,
+  cancelLabel = 'Cancel',
   danger,
   onConfirm,
   onCancel,
@@ -33,7 +35,7 @@ export function ConfirmModal({
         <div className="modal-body">{body}</div>
         <div className="modal-actions">
           <button className="ghost" onClick={onCancel}>
-            Cancel
+            {cancelLabel}
           </button>
           <button className={danger ? 'kill-all small' : 'primary'} onClick={onConfirm}>
             {confirmLabel}

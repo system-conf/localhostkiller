@@ -4,12 +4,16 @@ import { ProcessTable } from './components/ProcessTable';
 import { KillAllBar } from './components/KillAllBar';
 import { EmptyState } from './components/EmptyState';
 import { ConfirmModal } from './components/ConfirmModal';
-import { Flame, EyeOff } from './components/Icons';
+import { LanguageSwitcher } from './components/LanguageSwitcher';
+import { Flame, EyeOff, Github } from './components/Icons';
+import { useI18n } from './i18n/I18nContext';
 import type { LocalhostProcess } from './types';
 
 const AUTO_REFRESH_MS = 5000;
+const REPO_URL = 'https://github.com/system-conf/localhostkiller';
 
 export function App(): JSX.Element {
+  const { t } = useI18n();
   const [items, setItems] = useState<LocalhostProcess[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -119,7 +123,7 @@ export function App(): JSX.Element {
     try {
       const result = await window.lhk.killAll(includeProtected);
       if (result.failed.length) {
-        setError(`Killed ${result.killed.length}, failed ${result.failed.length}`);
+        setError(t.error.killedFailed(result.killed.length, result.failed.length));
       }
     } catch (e) {
       setError((e as Error).message);
@@ -127,35 +131,45 @@ export function App(): JSX.Element {
       setLoading(false);
       await refresh();
     }
-  }, [includeProtected, refresh]);
+  }, [includeProtected, refresh, t]);
 
   return (
     <div className="app">
       <header className="header">
         <div className="title">
           <Flame size={18} className="brand-flame" />
-          <span className="title-text">Localhost Killer</span>
+          <span className="title-text">{t.app.title}</span>
           <span className="title-sep" />
           <span className="title-meta">
             <strong>{killableCount}</strong>
-            <span className="dim"> killable</span>
+            <span className="dim"> {t.header.killable}</span>
             {protectedCount > 0 && (
               <>
                 <span className="dim"> · </span>
                 <strong>{protectedCount}</strong>
-                <span className="dim"> protected</span>
+                <span className="dim"> {t.header.protected}</span>
               </>
             )}
           </span>
         </div>
         <div className="header-actions">
+          <LanguageSwitcher />
+          <span className="header-divider" />
+          <button
+            className="ghost icon-only"
+            onClick={() => window.lhk.openExternal(REPO_URL)}
+            title={t.app.githubTooltip}
+            aria-label="GitHub"
+          >
+            <Github size={15} />
+          </button>
           <button
             className="ghost icon-btn"
             onClick={() => window.lhk.hideToTray()}
-            title="Hide to system tray"
+            title={t.app.hideTooltip}
           >
             <EyeOff size={14} />
-            <span>Hide</span>
+            <span>{t.app.hide}</span>
           </button>
         </div>
       </header>
@@ -173,7 +187,8 @@ export function App(): JSX.Element {
 
       {error && (
         <div className="banner banner-error" onClick={() => setError(null)}>
-          {error} <span className="dismiss">dismiss</span>
+          <span>{error}</span>
+          <span className="dismiss">{t.error.dismiss}</span>
         </div>
       )}
 
@@ -198,11 +213,10 @@ export function App(): JSX.Element {
 
       {pendingKillAll && (
         <ConfirmModal
-          title="Kill All Localhost Processes"
-          body={`${killableCount} process(es) will be terminated${
-            includeProtected ? ' (including protected)' : ''
-          }. Continue?`}
-          confirmLabel="Kill All"
+          title={t.modal.killAllTitle}
+          body={`${killableCount}${includeProtected ? t.modal.killAllBodyProtected : ''}${t.modal.killAllBodyPart2}`}
+          confirmLabel={t.modal.killAllConfirm}
+          cancelLabel={t.modal.cancel}
           danger
           onCancel={() => setPendingKillAll(false)}
           onConfirm={() => void confirmKillAll()}
@@ -211,9 +225,10 @@ export function App(): JSX.Element {
 
       {pendingProtectedPid !== null && (
         <ConfirmModal
-          title="System process"
-          body={`PID ${pendingProtectedPid} appears to be a protected system process. Terminate anyway?`}
-          confirmLabel="Kill anyway"
+          title={t.modal.protectedTitle}
+          body={`${t.modal.protectedBodyPart1}${pendingProtectedPid}${t.modal.protectedBodyPart2}`}
+          confirmLabel={t.modal.protectedConfirm}
+          cancelLabel={t.modal.cancel}
           danger
           onCancel={() => setPendingProtectedPid(null)}
           onConfirm={() => void confirmKillProtected()}
