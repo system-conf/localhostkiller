@@ -48,6 +48,7 @@
     "dev:app": "npm run dev -w localhostkiller-app",
     "package:vscode": "npm run package -w localhostkiller-vscode",
     "package:app": "npm run package -w localhostkiller-app",
+    "icons:generate": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/generate-icons.ps1",
     "clean": "node -e \"require('fs').rmSync('packages/core/dist',{recursive:true,force:true});require('fs').rmSync('packages/vscode-extension/out',{recursive:true,force:true});require('fs').rmSync('packages/windows-app/dist-main',{recursive:true,force:true});require('fs').rmSync('packages/windows-app/dist-renderer',{recursive:true,force:true});require('fs').rmSync('packages/windows-app/release',{recursive:true,force:true});\""
   },
   "devDependencies": {

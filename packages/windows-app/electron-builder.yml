@@ -9,6 +9,7 @@ directories:
 files:
   - dist-main/**/*
   - dist-renderer/**/*
+  - resources/**/*
   - package.json
   - "!node_modules/@localhostkiller/core/src"
   - "!node_modules/@localhostkiller/core/tsconfig.json"
@@ -17,6 +18,7 @@ asar: true
 asarUnpack: []
 
 win:
+  icon: resources/icon.ico
   target:
     - target: nsis
       arch: [x64]
